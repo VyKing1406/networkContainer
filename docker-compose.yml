@@ -1,0 +1,30 @@
+version: '3'
+services:
+  data-services:
+    build: ./data-services
+    volumes: 
+      - ./data-services:/usr/src/app
+    ports:
+      - 5001:8080
+    networks:
+      my-networks:
+        ipv4_address: 10.105.1.102
+  web-service:
+    image: nginx:alpine
+    volumes:
+      - ./web-service:/usr/share/nginx/html
+    ports:
+      - 5002:80
+    depends_on:
+      - data-services
+    networks:
+      my-networks:
+        ipv4_address: 10.105.1.103
+      
+
+networks:
+  my-networks:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.105.1.0/24

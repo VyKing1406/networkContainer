@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Student<h1>
+        <ul id = "dataContainer"></ul>
+    <script type="text/javascript">
+        var url = "10.105.1.102:8080";
+        var studentText = "";
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                var students = data.data;
+                console.log(students);
+                students.forEach(student => {
+                    studentText += `<li>${student}</li>`
+                });
+                document.getElementById("dataContainer").innerHTML = studentText;
+            })
+            .catch(err => console.log(err)) 
+    </script>
+</body>
+</html>
